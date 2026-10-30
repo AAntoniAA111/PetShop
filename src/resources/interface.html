@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestão - Pet Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- CABEÇALHO COM MONITOR DE SESSÃO -->
+    <header>
+        <h2>🐾 PetShop Control</h2>
+        <div>
+            Sessão expira em: <span id="timer" class="timer-badge">30s</span>
+        </div>
+    </header>
+
+    <!-- ECRÃ DE LOGIN -->
+    <div id="login-screen" class="content">
+        <h3>Iniciar Sessão</h3>
+        <p class="subtitle">Insira as suas credenciais para aceder ao sistema.</p>
+
+        <form id="form-login" onsubmit="realizarLogin(event)">
+            <div class="form-group">
+                <label for="usuario">Utilizador:</label>
+                <input type="text" id="usuario" required placeholder="Ex: admin">
+            </div>
+            <div class="form-group">
+                <label for="senha">Palavra-passe:</label>
+                <input type="password" id="senha" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn">Entrar</button>
+        </form>
+    </div>
+
+    <!-- PAINEL PRINCIPAL (Oculto até autenticação) -->
+    <div id="main-panel" class="hidden">
+        <!-- Navegação por Separadores -->
+        <nav>
+            <button class="nav-btn active" onclick="mudarAba('tutores', this)">Tutores</button>
+            <button class="nav-btn" onclick="mudarAba('agendamentos', this)">Agendamentos</button>
+            <button class="nav-btn btn-logout" onclick="encerrarSessao()">Sair</button>
+        </nav>
+
+        <div class="content">
+            <!-- SECÇÃO 1: CADASTRO E LISTAGEM DE TUTORES -->
+            <div id="tutores" class="section active">
+                <h3>Cadastrar Novo Tutor</h3>
+                <form onsubmit="adicionarTutor(event)" class="form-grid">
+                    <div class="form-group flex-2">
+                        <label for="tutor-nome">Nome Completo:</label>
+                        <input type="text" id="tutor-nome" required>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="tutor-cpf">CPF:</label>
+                        <input type="text" id="tutor-cpf" required placeholder="000.000.000-00">
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="tutor-tel">Telefone:</label>
+                        <input type="text" id="tutor-tel" required placeholder="(00) 00000-0000">
+                    </div>
+                    <button type="submit" class="btn btn-block">Guardar Tutor</button>
+                </form>
+
+                <h3 class="section-title">Tutores Registados</h3>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>CPF (Criptografado)</th>
+                        <th>Telefone (Criptografado)</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tabela-tutores">
+                    <tr>
+                        <td>1</td>
+                        <td>Carlos Eduardo</td>
+                        <td><span class="badge-encrypted">AES</span> U2FsdGVkWF1a...</td>
+                        <td><span class="badge-encrypted">AES</span> K9fL2mP1zQ==</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- SECÇÃO 2: AGENDAMENTOS -->
+            <div id="agendamentos" class="section">
+                <h3>Novo Agendamento</h3>
+                <form onsubmit="adicionarAgendamento(event)" class="form-grid">
+                    <div class="form-group flex-1">
+                        <label for="agenda-data">Data e Hora:</label>
+                        <input type="datetime-local" id="agenda-data" required>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="agenda-servico">Serviço:</label>
+                        <select id="agenda-servico">
+                            <option value="Banho">Banho</option>
+                            <option value="Tosa">Tosa</option>
+                            <option value="Banho e Tosa">Banho e Tosa</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block">Agendar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
